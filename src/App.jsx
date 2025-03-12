@@ -1,24 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import './index.css'
-import { Button } from "@/components/ui/button"
+import './App.css';
+import './index.css';
+import Home from './pages/Home';
+import Features from './pages/Features';
+import Guide from './pages/Guide';
+import Templates from './pages/Templates';
+import Navbar from './components/Navbar/Navbar';
+import Altnavbar from './components/Navbar/Altnavbar';
+
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
+  return (
+    <Router>
+      <MainLayout />
+    </Router>
+  );
+}
+
+const MainLayout = () => {
+  const location = useLocation(); 
 
   return (
     <>
-      <div className='text-center container bg-red-500'>
-        
-        Click on the Vite and React logos to learn more
-      </div>
-      <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-    </div>
-      </>
-  )
-}
+      {/* Show Navbar on Home page, Altnavbar on others */}
+      {location.pathname === "/" ? <Navbar /> : <Altnavbar />}
 
-export default App
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/guide" element={<Guide />} />
+        <Route path="/templates" element={<Templates />} />
+      </Routes>
+    </>
+  );
+};
+
+export default App;
