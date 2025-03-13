@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
+import Card from "../cards/Cards";
+
 const words = ["Effortlessly.", "Professionally.", "Creatively.", "Uniquely."];
 
 export default function HeroSection() {
@@ -31,7 +33,7 @@ export default function HeroSection() {
             {words[index]}
           </motion.span>
         </h1>
-        <p className="ml-6  mt-3 text-4xl text-gray-300">
+        <p className="ml-6  mt-3 text-2xl text-gray-300">
         Your Dream Portfolio, One Click Away !!
         </p>
         <Button className="ml-6 mt-6 px-6 py-3 text-lg">Get Started</Button>
@@ -39,6 +41,7 @@ export default function HeroSection() {
 
       {/* Right Side - Image/Animation */}
       <div className="flex justify-center">
+        <Card />
       </div>
     </div>
   );
