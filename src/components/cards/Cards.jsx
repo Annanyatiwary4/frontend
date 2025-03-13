@@ -15,7 +15,7 @@ const Card = () => {
 
   return (
     <motion.div
-      className="bg-[#111827] text-white rounded-xl shadow-lg w-full max-w-[900px] flex flex-col overflow-hidden"
+      className="bg-[#111827] text-white rounded-xl shadow-lg w-full max-w-[600px] gap-x-2 flex flex-col overflow-hidden"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}

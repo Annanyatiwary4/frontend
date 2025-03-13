@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
 import Card from "../cards/Cards";
 
 const words = ["Effortlessly.", "Professionally.", "Creatively.", "Uniquely."];
@@ -17,10 +16,11 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="flex items-center justify-between min-h-screen px-10 bg-black text-white">
+    <div className="flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white">
+      
       {/* Left Side - Text Content */}
-      <div className="w-1/3">
-        <h1 className="ml-3  text-8xl font-bold leading-tight">
+      <div className="w-full md:w-1/2 lg:w-2/5 text-center md:text-left">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-tight">
           Build Your Portfolio{" "}
           <motion.span
             key={words[index]}
@@ -33,14 +33,14 @@ export default function HeroSection() {
             {words[index]}
           </motion.span>
         </h1>
-        <p className="ml-6  mt-3 text-2xl text-gray-300">
-        Your Dream Portfolio, One Click Away !!
+        <p className="mt-4 text-lg md:text-2xl text-gray-300">
+          Your Dream Portfolio, One Click Away!
         </p>
-        <Button className="ml-6 mt-6 px-6 py-3 text-lg">Get Started</Button>
+        <Button className="mt-6 px-8 py-3 text-lg">Get Started</Button>
       </div>
 
       {/* Right Side - Image/Animation */}
-      <div className="flex justify-center">
+      <div className="w-full md:w-1/2 lg:w-3/5 flex justify-center mt-10 md:mt-0">
         <Card />
       </div>
     </div>

@@ -15,7 +15,7 @@ const templates = [
 
 const TemplateCarousel = () => {
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-10">
+    <div className="w-full  mx-auto px-4 py-10">
       <h2 className="text-center text-3xl font-bold text-white mb-6">
         Choose a Template
       </h2>
