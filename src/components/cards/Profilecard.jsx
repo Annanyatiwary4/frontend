@@ -10,7 +10,7 @@ const ProfileCard = () => {
       {/* Fixed Profile Picture in the Corner */}
       <div className="absolute top-4 left-4 w-16 h-16 md:w-20 md:h-20 rounded-full border-4 border-blue-900 overflow-hidden">
         <img 
-          src="src/assets/images/profile.png" 
+          src="src\assets\images\profile.png" 
           alt="Profile Picture" 
           className="w-full h-full object-cover"
         />
