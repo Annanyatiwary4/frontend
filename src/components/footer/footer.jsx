@@ -3,29 +3,37 @@
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { Send } from "lucide-react"; // Importing Send Icon from Lucide
 
 const Footer = () => {
   return (
+    
     <footer className="w-full bg-black text-white py-16 px-6">
       {/* Footer Grid Layout */}
+      <Separator className="bg-gray-800 w-full my-4" />
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
         
         {/* Left Section - Contact Form */}
         <div className="flex flex-col space-y-6">
           <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">How to Reach Us</h2>
           <form className="max-w-xl space-y-4">
-            <Input type="text" placeholder="Your Name" className="bg-gray-900 text-white border-gray-700 focus:ring-2 focus:ring-blue-500" />
-            <Input type="email" placeholder="Your Email" className="bg-gray-900 text-white border-gray-700 focus:ring-2 focus:ring-blue-500" />
+            <Input type="text" placeholder="Your Name" className="bg-black text-white border-gray-700 focus:ring-2 focus:ring-blue-500 max-w-[400px]" />
+            <Input type="email" placeholder="Your Email" className="bg-black text-white border-gray-700 focus:ring-2 focus:ring-blue-500 max-w-[400px]" />
             
             {/* Textarea with Send Icon */}
-            <div className="relative">
-              <Textarea placeholder="Your Message" className="bg-gray-900 text-white border-gray-700 focus:ring-2 focus:ring-blue-500 pr-12" />
-              <button type="submit" className="absolute bottom-4 right-4 text-blue-500 hover:text-blue-600 transition-all">
-                <Send size={22} />
-              </button>
-            </div>
+            <div className="relative max-w-[400px]">
+              <Textarea 
+                placeholder="Your Message" 
+                className="w-full bg-black text-white border-gray-700 focus:ring-2 focus:ring-blue-500 pr-12 h-[100px]" 
+              />
+               <button 
+                 type="submit" 
+                className="absolute right-3 bottom-3 text-blue-500 hover:text-blue-600 transition-all"
+                  >
+                  <Send size={22} />
+                        </button>
+              </div>
+
           </form>
         </div>
 

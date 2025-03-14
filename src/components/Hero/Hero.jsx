@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Card from "../cards/Cards";
+import { Link } from "react-router-dom"; 
 
 const words = ["Effortlessly.", "Professionally.", "Creatively.", "Uniquely."];
 
@@ -16,10 +17,10 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white">
+    <div className="flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white ">
       
       {/* Left Side - Text Content */}
-      <div className="w-full md:w-1/2 lg:w-2/5 text-center md:text-left">
+      <div className="w-full md:w-1/2 lg:w-2/5 text-center md:text-left ">
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-tight">
           Build Your Portfolio{" "}
           <motion.span
@@ -36,13 +37,24 @@ export default function HeroSection() {
         <p className="mt-4 text-lg md:text-2xl text-gray-300">
           Your Dream Portfolio, One Click Away!
         </p>
-        <Button className="mt-6 px-8 py-3 text-lg">Get Started</Button>
+
+        {/* Get Started Button */}
+        <GetStartedButton />
       </div>
 
       {/* Right Side - Image/Animation */}
-      <div className="w-full md:w-1/2 lg:w-3/5 flex justify-center mt-10 md:mt-0">
+      <div className="w-full  md:w-1/2 lg:w-3/5 flex justify-center mt-10 md:mt-0">
         <Card />
       </div>
     </div>
   );
 }
+
+function GetStartedButton() {
+  return (
+    <Link to="/register" className="hover:text-gray-400 transition"><Button className="mt-6 px-8 py-3 text-lg" >
+    Get Started
+  </Button></Link>
+    
+  );
+};

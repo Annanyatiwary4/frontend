@@ -28,8 +28,8 @@ const Navbar = () => {
           <Link to="/templates" className="hover:text-gray-400 transition">Templates</Link>
         </li>
       </ul>
-
-      {/* Mobile Navigation (ShadCN Sheet) */}
+        
+        {/* Mobile Navigation */}
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="ghost" className="md:hidden p-2">

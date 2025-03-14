@@ -30,7 +30,7 @@ const Guide = () => {
   return (
     <div className="w-full min-h-auto bg-black text-white flex flex-col md:flex-row items-center md:items-start justify-center px-6 py-6">
     {/* Left Side - Title */}
-    <div className="w-full md:w-1/3 flex flex-col items-center md:items-start">
+    <div className="w-full ml-6 md:w-1/3 flex flex-col items-center md:items-start">
       <p className="text-5xl md:text-7xl lg:text-9xl font-medium text-transparent bg-gradient-to-r from-[#7953cd] via-[#00affa] to-[#764ada] bg-clip-text animate-textShine text-center md:text-left">
         How It Works !!
       </p>

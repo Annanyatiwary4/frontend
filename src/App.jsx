@@ -9,6 +9,7 @@ import Templates from './pages/Templates';
 import Navbar from './components/Navbar/Navbar';
 import Altnavbar from './components/Navbar/Altnavbar';
 import Loader from './components/Pageerror/Load';
+import Register from './pages/Register';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -36,6 +37,7 @@ const MainLayout = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/features" element={<Features />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/templates" element={<Templates />} />
@@ -44,18 +46,38 @@ const MainLayout = () => {
   );
 };
 
-// Detects Route Changes and Shows Loader
+
+
+
 const PageLoader = ({ setLoading }) => {
   const location = useLocation();
 
   useEffect(() => {
-    setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 2000); // Simulate a 2-second loading delay
+    let timer;
 
-    return () => clearTimeout(timer); // Cleanup function
+    // Start a delay, only show the loader if loading takes longer than 300ms
+    const delay = setTimeout(() => {
+      setLoading(true);
+    }, 2000);
+
+    // Fake "actual" page load detection
+    timer = setTimeout(() => {
+      clearTimeout(delay); // Cancel showing the loader if already loaded
+      setLoading(false);
+    }, 2000); // Adjust this time based on your actual page load times
+
+    return () => {
+      clearTimeout(delay);
+      clearTimeout(timer);
+      setLoading(false); // Clean up on unmount
+    };
   }, [location.pathname]);
 
   return null;
 };
+
+
+
+
 
 export default App;
