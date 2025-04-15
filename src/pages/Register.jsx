@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,6 +17,8 @@ const RegisterCard = () => {
     agree: false,
   });
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -23,18 +27,38 @@ const RegisterCard = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    // Handle registration logic here
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
+        fullname: formData.name,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
+
+      alert(res.data.message);
+
+      // ✅ Navigate to dashboard after success
+      navigate("/dashboard");
+    } catch (error) {
+      const msg = error.response?.data?.message || "Registration failed!";
+      alert(msg);
+    }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black px-4">
-  <Card className="w-full max-w-md p-6 shadow-m  border-gray-700 shadow-blue-700 bg-black border-2">
-    <CardHeader className="text-center">
-      <CardTitle className="text-2xl text-white">Create an Account</CardTitle>
-    </CardHeader>
+      <Card className="w-full max-w-md p-6 shadow-m border-gray-700 shadow-blue-700 bg-black border-2">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl text-white">Create an Account</CardTitle>
+        </CardHeader>
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -44,7 +68,7 @@ const RegisterCard = () => {
                 type="text"
                 id="name"
                 name="name"
-                placeholder="John Doe"
+                placeholder="Enter your full name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -97,15 +121,14 @@ const RegisterCard = () => {
                 checked={formData.agree}
                 onChange={handleChange}
               />
-              <Label htmlFor="agree" className="text-sm">
-                I agree to the{" "}
-                <Link to="/terms" className="text-blue-700 hover:underline dark:text-blue-500">
-                  Terms & Conditions
-                </Link>
-              </Label>
+             
             </div>
 
-            <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600">
+            <Button
+              type="submit"
+              className="w-full bg-blue-500 hover:bg-blue-600"
+              
+            >
               Register
             </Button>
           </form>

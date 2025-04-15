@@ -15,7 +15,7 @@ const Footer = () => {
         
         {/* Left Section - Contact Form */}
         <div className="flex flex-col space-y-6">
-          <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">How to Reach Us</h2>
+          <h2 className="text-4xl font-semibold bg-gradient-to-r from-blue-500 to-[#35fed3] text-transparent bg-clip-text">Get in Touch</h2>
           <form className="max-w-xl space-y-4">
             <Input type="text" placeholder="Your Name" className="bg-black text-white border-gray-700 focus:ring-2 focus:ring-blue-500 max-w-[400px]" />
             <Input type="email" placeholder="Your Email" className="bg-black text-white border-gray-700 focus:ring-2 focus:ring-blue-500 max-w-[400px]" />
@@ -81,7 +81,7 @@ const Footer = () => {
         }
         .animate-liquidGradient {
           background-size: 300% 300%;
-          animation: liquidGradient 5s infinite ease-in-out;
+          animation: liquidGradient 4s infinite ease-in-out;
         }
       `}</style>
     </footer>
