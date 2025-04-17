@@ -11,9 +11,11 @@ import Altnavbar from './components/Navbar/Altnavbar';
 import Loader from './components/Pageerror/Load';
 import Register from './pages/Register';
 import Dashboard from './client/Dashboard';
-
+import Template1Route from './Routes/Template1Route';
 // ✅ Import UserProvider
 import { UserProvider } from './context/UserContext';
+import Template2Routes from './Routes/Template2Route';
+import Template3Routes from './Routes/Template3Route';
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -27,6 +29,12 @@ function App() {
         {loading && <Loader loading={loading} />}
 
         <MainLayout />
+        <Routes>
+          {Template1Route}
+          {Template2Routes}
+          {Template3Routes}
+        </Routes>
+        
       </Router>
     </UserProvider>
   );
@@ -80,5 +88,12 @@ const PageLoader = ({ setLoading }) => {
 
   return null;
 };
+
+
+
+
+
+
+
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AppSidebar from "./Sidebar/Clientsidebar";
 import { useUser } from "@/context/UserContext";
-import NewProject from "@/components/NewProject";
+import NewProject from "@/client/NewProject";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { SidebarProvider, SidebarTrigger, SidebarInset } from "@/components/ui/sidebar";
 import { Separator } from "@/components/ui/separator";
