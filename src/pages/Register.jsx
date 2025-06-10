@@ -1,57 +1,40 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Link } from "react-router-dom";
+import { useAuthStore } from "@/store/authStore";
 
-const RegisterCard = () => {
+
+
+const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    agree: false,
   });
 
   const navigate = useNavigate();
+  const { register, isLoading } = useAuthStore();
+  const handleRegister = async(e) => {
+          e.preventDefault();
+         const { name, email, password, confirmPassword } = formData;
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+            if (password !== confirmPassword) {
+              alert("Passwords do not match");
+              return;
+            }
+          try {
+            await register(email, password,name)
+            navigate("/verify-email");
+          } catch (error) {
+            console.error("Registration failed:", error);
+          }
   };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", {
-        fullname: formData.name,
-        email: formData.email,
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-      });
-
-      alert(res.data.message);
-
-      // ✅ Navigate to dashboard after success
-      navigate("/dashboard");
-    } catch (error) {
-      const msg = error.response?.data?.message || "Registration failed!";
-      alert(msg);
-    }
-  };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-black px-4">
@@ -61,7 +44,7 @@ const RegisterCard = () => {
         </CardHeader>
 
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2 text-teal-50">
               <Label htmlFor="name">Full Name</Label>
               <Input
@@ -70,7 +53,7 @@ const RegisterCard = () => {
                 name="name"
                 placeholder="Enter your full name"
                 value={formData.name}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
               />
             </div>
@@ -83,7 +66,7 @@ const RegisterCard = () => {
                 name="email"
                 placeholder="name@company.com"
                 value={formData.email}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
             </div>
@@ -96,7 +79,7 @@ const RegisterCard = () => {
                 name="password"
                 placeholder="••••••••"
                 value={formData.password}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
               />
             </div>
@@ -109,28 +92,18 @@ const RegisterCard = () => {
                 name="confirmPassword"
                 placeholder="••••••••"
                 value={formData.confirmPassword}
-                onChange={handleChange}
+                onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                 required
               />
             </div>
 
-            <div className="flex items-center space-x-2 text-amber-50">
-              <Checkbox
-                id="agree"
-                name="agree"
-                checked={formData.agree}
-                onChange={handleChange}
-              />
-             
-            </div>
-
-            <Button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600"
-              
-            >
-              Register
-            </Button>
+              <Button 
+                type="submit" 
+                className="w-full bg-blue-500 hover:bg-blue-600"
+                disabled={isLoading}
+              >
+                {isLoading ? "Registering..." : "Register"}
+              </Button>
           </form>
         </CardContent>
 
@@ -147,4 +120,4 @@ const RegisterCard = () => {
   );
 };
 
-export default RegisterCard;
+export default Register;

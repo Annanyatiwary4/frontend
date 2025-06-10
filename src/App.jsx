@@ -1,42 +1,68 @@
-import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import './App.css';
-import './index.css';
-import Home from './pages/Home';
-import Features from './pages/Features';
-import Guide from './pages/Guide';
-import Templates from './pages/Templates';
-import Navbar from './components/Navbar/Navbar';
-import Altnavbar from './components/Navbar/Altnavbar';
-import Loader from './components/Pageerror/Load';
-import Register from './pages/Register';
-import Dashboard from './client/Dashboard';
-import Template1Route from './Routes/Template1Route';
-// ✅ Import UserProvider
-import { UserProvider } from './context/UserContext';
-import Template2Routes from './Routes/Template2Route';
-import Template3Routes from './Routes/Template3Route';
+import { useState, useEffect, use } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+
+import "./App.css";
+import "./index.css";
+
+import Home from "./pages/Home";
+import Features from "./pages/Features";
+import Guide from "./pages/Guide";
+import Templates from "./pages/Templates";
+import Register from "./pages/Register";
+import Dashboard from "./client/Dashboard";
+
+import Navbar from "./components/Navbar/Navbar";
+import Altnavbar from "./components/Navbar/Altnavbar";
+
+import EmailVerify from "./shared/VerifyEmail";
+import Error from "./shared/Error";
+import Login from "./pages/Login";
+import  { Toaster } from "react-hot-toast";
+import { useAuthStore } from "./store/authStore";
+import Loader from "./components/Pageerror/Loader";
+import ForgotPasswordPage from "./shared/ForgotPassword";
+import ResetPasswordPage from "./shared/ResetPassword";
+
+
+// protect authenticated routes
+
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated || !user) {
+    return <Login />;
+  }
+
+  if(!user.isVerified) {
+    return <EmailVerify />;
+  }
+
+  return children;
+}
+
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const {isCheckingAuth,checkAuth}= useAuthStore();
+  useEffect(() => {
+    checkAuth();
+  },[checkAuth]);
+  if(isCheckingAuth) return <Loader />;
 
   return (
-    // ✅ Wrap Router with UserProvider
-    <UserProvider>
-      <Router>
-        <PageLoader setLoading={setLoading} />
+    <Router>
+      
 
-        {loading && <Loader loading={loading} />}
-
-        <MainLayout />
-        <Routes>
-          {Template1Route}
-          {Template2Routes}
-          {Template3Routes}
-        </Routes>
-        
-      </Router>
-    </UserProvider>
+      <Routes>
+        {/* 👇 Main layout wraps all normal pages */}
+        <Route path="/*" element={<MainLayout />} />
+      </Routes>
+    </Router>
   );
 }
 
@@ -45,54 +71,52 @@ const MainLayout = () => {
 
   return (
     <>
-      {/* Show Navbar on Home page, Altnavbar on others */}
+      {/* 👇 Dynamic navbar switch */}
       {["/"].includes(location.pathname) ? (
         <Navbar />
-      ) : ["/features", "/guide", '/templates'].includes(location.pathname) ? (
+      ) : ["/features", "/guide", "/templates"].includes(location.pathname) ? (
         <Altnavbar />
       ) : null}
 
+      {/* 👇 All app routes */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={
+         
+          <Register />
+          
+            }/>
+         
+        <Route path="/login" element={
+          
+          <Login />
+          } />
+        
         <Route path="/features" element={<Features />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/templates" element={<Templates />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+          <Dashboard />
+          </ProtectedRoute>
+          } />
+        <Route path="/verify-email" element={<EmailVerify />} />
+        <Route path="/error" element={<Error />} />
+        <Route path="/forgot-password" element={
+          
+           <ForgotPasswordPage />
+         
+          } />
+
+          <Route path="/reset-password/:token" element={
+          <ResetPasswordPage />
+          } />
+
       </Routes>
+      <Toaster />
     </>
   );
 };
-
-const PageLoader = ({ setLoading }) => {
-  const location = useLocation();
-
-  useEffect(() => {
-    let timer;
-
-    const delay = setTimeout(() => {
-      setLoading(true);
-    }, 2000);
-
-    timer = setTimeout(() => {
-      clearTimeout(delay);
-      setLoading(false);
-    }, 2000);
-
-    return () => {
-      clearTimeout(delay);
-      clearTimeout(timer);
-      setLoading(false);
-    };
-  }, [location.pathname]);
-
-  return null;
-};
-
-
-
-
-
 
 
 
