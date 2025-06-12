@@ -15,13 +15,12 @@ const ForgotPasswordPage = () => {
 
     const handleSubmit = async (e) => {
 	e.preventDefault();
-	console.log("Submit clicked", email);
+	
 
 	try {
-		console.log("Calling forgotPassword...");
+		
 		const msg = await forgotPassword(email);
-		console.log("forgotPassword finished with msg:", msg);
-
+		
 		setIsSubmitted(true);
 	} catch (err) {
 		console.log("Caught error in handleSubmit:", err);

@@ -1,6 +1,6 @@
-"use client";
+//"use client";
 
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
+// import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import React from "react";
 
 const guideSteps = [
@@ -56,7 +56,7 @@ const Guide = () => {
 
       {/* Right Side - Accordion Steps */}
       <div className="w-2/3 flex justify-end">
-  <Accordion type="single" collapsible className="max-w-lg w-full space-y-2">
+  {/* <Accordion type="single" collapsible className="max-w-lg w-full space-y-2">
     {guideSteps.map((step) => (
       <AccordionItem key={step.id} value={`step-${step.id}`} className="bg-transparent">
         <AccordionTrigger className="text-lg font-semibold text-white hover:text-blue-400 transition-all">
@@ -67,7 +67,7 @@ const Guide = () => {
         </AccordionContent>
       </AccordionItem>
     ))}
-  </Accordion>
+  </Accordion> */}
 </div>
 
     </div>

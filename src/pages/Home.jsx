@@ -1,8 +1,10 @@
 import React from "react";
 import  HeroSection from "../components/Hero/Hero";
-import TemplateCards from "@/components/TemplateCard/TemplateCard";
+
 import Guide from "./Guide";
 import Footer from "@/components/footer/footer";
+import FeaturesSection from "./Features";
+import { Templates } from "./Templates";
 
 export default function Home() {
      
@@ -10,7 +12,8 @@ export default function Home() {
     <>  
     <div className="flex flex-col gap-10 min-h-screen bg-black">
      <HeroSection /> 
-     <TemplateCards />
+     <Templates />
+     <FeaturesSection />
      <Guide />
      <Footer />
     </div>

@@ -12,7 +12,7 @@ import "./index.css";
 import Home from "./pages/Home";
 import Features from "./pages/Features";
 import Guide from "./pages/Guide";
-import Templates from "./pages/Templates";
+
 import Register from "./pages/Register";
 import Dashboard from "./client/Dashboard";
 
@@ -27,6 +27,7 @@ import { useAuthStore } from "./store/authStore";
 import Loader from "./components/Pageerror/Loader";
 import ForgotPasswordPage from "./shared/ForgotPassword";
 import ResetPasswordPage from "./shared/ResetPassword";
+import { Templates } from "./pages/Templates";
 
 
 // protect authenticated routes
@@ -48,11 +49,11 @@ const ProtectedRoute = ({ children }) => {
 
 function App() {
   const [loading, setLoading] = useState(false);
-  const {isCheckingAuth,checkAuth}= useAuthStore();
-  useEffect(() => {
-    checkAuth();
-  },[checkAuth]);
-  if(isCheckingAuth) return <Loader />;
+ // const {isCheckingAuth,checkAuth}= useAuthStore();
+ // useEffect(() => {
+  //  checkAuth();
+ // },[checkAuth]);
+  //if(isCheckingAuth) return <Loader />;
 
   return (
     <Router>
