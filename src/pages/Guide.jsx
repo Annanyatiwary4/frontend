@@ -1,75 +1,118 @@
-//"use client";
+"use client";
 
-// import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import React from "react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Plus, X } from "lucide-react";
 
 const guideSteps = [
   {
     id: 1,
     title: "Step 1: Create Your Account",
     description: "Sign up and get access to all features instantly.",
+    points: [
+      "Quick signup with email or social login",
+      "Secure account creation",
+      "Start building immediately",
+    ],
   },
   {
     id: 2,
     title: "Step 2: Choose a Theme",
     description: "Pick from professionally designed themes to start building your portfolio.",
+    points: [
+      "Dark/light & colorful themes",
+      "Professionally tailored styles",
+      "Mobile-optimized templates",
+    ],
   },
   {
     id: 3,
     title: "Step 3: Customize Your Portfolio",
     description: "Use our drag-and-drop editor to personalize your site effortlessly.",
+    points: [
+      "Live editor with preview",
+      "Add sections like Projects, Blogs, About",
+      "Easily reorder or hide content",
+    ],
   },
   {
     id: 4,
     title: "Step 4: Publish & Share",
     description: "Go live and showcase your portfolio to the world with a single click!",
+    points: [
+      "Instant deployment",
+      "Custom domain support",
+      "Share on LinkedIn or resume",
+    ],
   },
 ];
 
 const Guide = () => {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const toggleItem = (index) => {
+    setActiveIndex((prev) => (prev === index ? null : index));
+  };
+
   return (
-    <div className="w-full min-h-auto bg-black text-white flex flex-col md:flex-row items-center md:items-start justify-center px-6 py-6">
-    {/* Left Side - Title */}
-    <div className="w-full ml-6 md:w-1/3 flex flex-col items-center md:items-start">
-      <p className="text-5xl md:text-7xl lg:text-9xl font-medium text-transparent bg-gradient-to-r from-[#7953cd] via-[#00affa] to-[#764ada] bg-clip-text animate-textShine text-center md:text-left">
-        How It Works !!
-      </p>
-    </div>
- 
-<style>{`
-
-
-    @keyframes textShine {
-          0% {
-            background-position: 0% 50%;
-          }
-          100% {
-            background-position: 100% 50%;
-          }
-        }
-        .animate-textShine {
-          background-size: 300% auto;
-          animation: textShine 3s ease-in-out infinite alternate;
-        }
-      `}</style>
+    <div className="w-full min-h-screen  bg-blue-50 text-black flex flex-col items-center justify-center px-6 py-12">
       
+      {/* Top - Title Section */}
+      <motion.p
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        viewport={{ amount: 0.5 }}
+        className="text-5xl md:text-7xl font-medium lg:text-7xl text-transparent bg-blue-600 bg-clip-text animate-textShine text-center mb-12"
+      >
+        Launch Your Portfolio in few Simple Steps
+      </motion.p>
 
-      {/* Right Side - Accordion Steps */}
-      <div className="w-2/3 flex justify-end">
-  {/* <Accordion type="single" collapsible className="max-w-lg w-full space-y-2">
-    {guideSteps.map((step) => (
-      <AccordionItem key={step.id} value={`step-${step.id}`} className="bg-transparent">
-        <AccordionTrigger className="text-lg font-semibold text-white hover:text-blue-400 transition-all">
-          {step.title}
-        </AccordionTrigger>
-        <AccordionContent className="text-gray-300">
-          {step.description}
-        </AccordionContent>
-      </AccordionItem>
-    ))}
-  </Accordion> */}
-</div>
+      {/* Bottom - Accordion Steps */}
+      <div className="w-full max-w-3xl mx-auto flex flex-col gap-6">
+        {guideSteps.map((step, index) => {
+          const isActive = activeIndex === index;
 
+          return (
+            <div
+              key={step.id}
+              onClick={() => toggleItem(index)}
+              className={`rounded-md p-6 shadow-lg border cursor-pointer grid grid-cols-[auto_1fr_auto] gap-6 items-center transition-all duration-300 ${
+                isActive ? "border-blue-600" : "border-gray-200"
+              }`}
+            >
+              <p className="text-3xl font-semibold text-blue-800">{`0${step.id}`}</p>
+              <h2 className="text-xl md:text-2xl font-semibold text-slate-800">
+                {step.title}
+              </h2>
+              <div className="text-blue-600">
+                {isActive ? <X className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+              </div>
+
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    className="col-span-2 col-start-2 "
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <p className="text-slate-700 mb-4 text-base leading-relaxed">
+                      {step.description}
+                    </p>
+                    <ul className="list-disc ml-6 text-slate-600 space-y-2">
+                      {step.points.map((point, idx) => (
+                        <li key={idx}>{point}</li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

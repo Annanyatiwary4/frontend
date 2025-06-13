@@ -1,51 +1,65 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"; // ShadCN Sheet (Sidebar)
-import Logo from "../ui/logo";
+import React, { useEffect, useState } from "react";
+import { Home, Info, Layout, Sparkle } from "lucide-react";
+import { FloatingNav } from "../ui/floating-navbar"; // Your custom pill navbar
+
+const navItems = [
+  {
+    name: "Home",
+    link: "/",
+    icon: <Home className="h-4 w-4" />,
+  },
+  {
+    name: "Features",
+    link: "#features",
+    icon: <Sparkle className="h-4 w-4" />,
+  },
+  {
+    name: "Guide",
+    link: "#how-it-works",
+    icon: <Info className="h-4 w-4" />,
+  },
+  {
+    name: "Templates",
+    link: "#templates",
+    icon: <Layout className="h-4 w-4" />,
+  },
+];
 
 const Navbar = () => {
-  return (
-    <nav className="w-full py-4 px-6 md:px-12 lg:px-20 bg-gray-900 text-white shadow-md flex justify-between items-center">
-      {/* Left - Logo */}
-      <div className="flex-shrink-0">
-        <Logo />
-      </div>
+  const [showFloating, setShowFloating] = useState(false);
 
-      {/* Desktop Navigation */}
-      <ul className="hidden md:flex space-x-6 text-lg">
-        <li>
-          <Link to="/" className="hover:text-gray-400 transition">Home</Link>
-        </li>
-        <li>
-          <Link to="/features" className="hover:text-gray-400 transition">Features</Link>
-        </li>
-        <li>
-          <Link to="/guide" className="hover:text-gray-400 transition">Guide</Link>
-        </li>
-        <li>
-          <Link to="/templates" className="hover:text-gray-400 transition">Templates</Link>
-        </li>
-      </ul>
-        
-        {/* Mobile Navigation */}
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button variant="ghost" className="md:hidden p-2">
-            <Menu size={28} />
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="bg-gray-900 text-white">
-          <div className="flex flex-col space-y-4 text-lg mt-6">
-            <Link to="/" className="hover:text-gray-400 transition">Home</Link>
-            <Link to="/features" className="hover:text-gray-400 transition">Features</Link>
-            <Link to="/guide" className="hover:text-gray-400 transition">Guide</Link>
-            <Link to="/templates" className="hover:text-gray-400 transition">Templates</Link>
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFloating(window.scrollY > 100);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <div className="w-full">
+      {!showFloating && (
+        <header className="fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-md border-b border-neutral-800 px-6 py-4 shadow-md">
+          <div className="mx-auto flex max-w-7xl items-center justify-between">
+            <h1 className="text-4xl font-bold text-blue-600 tracking-tight">Portfello</h1>
+            <nav className="flex gap-6">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.link}
+                  className="flex items-center gap-2 text-lg font-medium text-neutral-300 hover:text-blue-500 transition-colors duration-200"
+                >
+                  {item.icon}
+                  {item.name}
+                </a>
+              ))}
+            </nav>
           </div>
-        </SheetContent>
-      </Sheet>
-    </nav>
+        </header>
+      )}
+
+      {showFloating && <FloatingNav navItems={navItems} />}
+    </div>
   );
 };
 

@@ -15,22 +15,16 @@ const Card = () => {
 
   return (
     <motion.div
-      className="bg-[#111827] text-white rounded-xl shadow-lg w-full max-w-[600px] gap-x-2 flex flex-col overflow-hidden"
+      className="bg-slate-900 text-white rounded-xl shadow-lg w-full max-w-[600px] gap-x-2 flex flex-col overflow-hidden"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
       {/* Header */}
-      <div className="p-6 bg-[#1a2337]">
-        <motion.span
-           className=" text-blue-500 rounded-xl  w-[700px] flex flex-col overflow-hidden"
-          whileHover={{ scale: 1.1 }}
-        >
-        Portfello
-        </motion.span>
+      <div className="p-6 bg-slate-900">
         <h1 className="text-2xl font-bold mt-3">
           Build your portfolio <br />
-          <span className="text-blue-500">with ease</span>
+          <span className="text-blue-600">with ease</span>
         </h1>
         <p className="text-gray-400 mt-2 text-sm">
           Create and customize your portfolio with a seamless experience.
@@ -38,7 +32,7 @@ const Card = () => {
       </div>
 
       {/* Sidebar & Profile Section */}
-      <div className="bg-[#1a2337] p-4 flex flex-col md:flex-row gap-4">
+      <div className="bg-slate-900 p-4 flex flex-col md:flex-row gap-4">
         {/* Sidebar Navigation */}
         <div className="flex-1">
          

@@ -15,6 +15,7 @@ export default function Home() {
      <Templates />
      <FeaturesSection />
      <Guide />
+
      <Footer />
     </div>
       </>

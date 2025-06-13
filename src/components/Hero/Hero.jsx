@@ -17,11 +17,11 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white ">
+    <div className="mt-20 flex flex-col md:flex-row items-center justify-between min-h-screen px-6 md:px-12 lg:px-20 bg-black text-white ">
       
       {/* Left Side - Text Content */}
       <div className="w-full md:w-1/2 lg:w-2/5 text-center md:text-left ">
-        <h1 className="text-4xl md:text-6xl lg:text-8xl font-bold leading-tight">
+        <h1 className="text-4xl md:text-6xl lg:text-8xl font-medium font-sans leading-tight">
           Build Your Portfolio{" "}
           <motion.span
             key={words[index]}
@@ -29,7 +29,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
             transition={{ duration: 0.5 }}
-            className="text-blue-500"
+            className="text-blue-600"
           >
             {words[index]}
           </motion.span>

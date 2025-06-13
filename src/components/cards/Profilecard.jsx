@@ -47,7 +47,7 @@ const ProfileCard = () => {
 
       {/* Animated Info Section */}
       <motion.div
-        className="absolute bottom-1 left-1 right-1 bg-blue-600 top-3/4 rounded-2xl p-4 flex flex-col items-center text-white"
+        className="absolute bottom-1 left-1 right-1 bg-blue-950 top-3/4 rounded-2xl p-4 flex flex-col items-center text-white"
         whileHover={{ top: "25%", borderRadius: "80px 29px 29px 29px" }}
       >
         <h2 className="text-lg md:text-2xl font-bold">Emily</h2>
