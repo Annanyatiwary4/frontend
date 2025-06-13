@@ -1,8 +1,19 @@
-import React from 'react'
+import React from 'react';
+import { AppSidebar } from './app-sidebar';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 
-export const Dashboard = () => {
+const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <SidebarProvider>
+      <div className="flex">
+        <AppSidebar />
+        <main className="flex-1 p-4">
+          <SidebarTrigger />
+          
+        </main>
+      </div>
+    </SidebarProvider>
+  );
+};
+
 export default Dashboard;
