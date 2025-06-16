@@ -1,35 +1,15 @@
-// components/Projects.tsx
+// components/Project3.tsx
 import React from "react";
 import { motion } from "framer-motion";
 
-const Project3 = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "Project 1",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed do eiusmod tempor incididunt.",
-      image: "./assets/jpeg/project-mockup-example.jpeg",
-      link: "#", // Add your project link here
-    },
-    {
-      id: 2,
-      title: "Project 2",
-      description:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque.",
-      image: "./assets/jpeg/project-mockup-example2.jpeg",
-      link: "#", // Add your project link here
-    },
-    {
-      id: 3,
-      title: "Project 3",
-      description:
-        "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.",
-      image: "./assets/jpeg/project-mockup-example3.jpeg",
-      link: "#", // Add your project link here
-    },
-  ];
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+}
 
+const Project3 = ({ projects }: { projects: Project[] }) => {
   return (
     <motion.section
       id="projects"
@@ -41,9 +21,9 @@ const Project3 = () => {
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold mb-10 text-center">Projects</h2>
 
-        {projects.map((project) => (
+        {projects.map((project, idx) => (
           <motion.div
-            key={project.id}
+            key={idx}
             className="flex flex-col md:flex-row items-center gap-8 bg-background p-6 rounded-xl shadow-md mb-8"
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
@@ -69,6 +49,5 @@ const Project3 = () => {
     </motion.section>
   );
 };
-
 
 export default Project3;

@@ -5,12 +5,28 @@ import DashboardTopbar from './Topbar';
 import ProjectCard from './ProjectCard';
 
 const Dashboard = () => {
-  const [projects, setProjects] = useState([]);
+ const [projects, setProjects] = useState(() => {
+    // Load projects from localStorage
+    const saved = localStorage.getItem("projects");
+    return saved ? JSON.parse(saved) : [];
+  });
   const[view, setView] = useState('grid');
 
-  const handleCreateProject = (project) => {
-    setProjects((prev) => [...prev, project]);
+  const handleCreateProject = (projectData) => {
+  const newProject = {
+    id: crypto.randomUUID(),
+    name: projectData.name,
+    templateId: projectData.templateId, // 👈 comes from Theme Selection
+    createdAt: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+
+
   };
+
+  const updatedProjects = [...projects, newProject];
+    setProjects(updatedProjects);
+    localStorage.setItem("projects", JSON.stringify(updatedProjects));
+};
+
 
   return (
     <SidebarProvider>

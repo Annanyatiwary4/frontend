@@ -6,9 +6,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { color } from "framer-motion";
+import { templateList } from "@/lib/TemplateList";
+import { Link } from "react-router";
+
+const templatesMap = Object.fromEntries(
+  templateList.map((template) => [template.id, template])
+);
 
 export default function ProjectListLayout({ projects = [], view = "grid" }) {
+
+  
+ 
   if (projects.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center text-muted-foreground">
@@ -32,19 +40,31 @@ export default function ProjectListLayout({ projects = [], view = "grid" }) {
         >
           {/* Preview */}
           <div
-            className={`${
-              view === "grid"
-                ? "aspect-video bg-gray-100 dark:bg-zinc-800 rounded-t-md"
-                : "w-32 h-20 bg-gray-100 dark:bg-zinc-800 rounded-md"
-            }`}
-          />
+              className={`overflow-hidden ${
+                view === "grid"
+                  ? "aspect-video rounded-t-md"
+                  : "w-32 h-20 rounded-md"
+              }`}
+            >
+              {templatesMap[project.templateId]?.src ? (
+                <img
+                  src={templatesMap[project.templateId].src}
+                  alt={templatesMap[project.templateId].title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-sm text-muted-foreground">
+                  No Preview
+                </div>
+              )}
+              
+
+            </div>
 
           {/* Content */}
           <div className={`p-4 space-y-1 ${view === "list" ? "flex-1" : ""}`}>
             <h3 className="font-semibold text-base">{project.name}</h3>
-            <p className="text-sm text-muted-foreground line-clamp-2">
-              {project.description}
-            </p>
+           
             <p className="text-xs text-muted-foreground">
               Created: {project.createdAt}
             </p>
@@ -52,9 +72,13 @@ export default function ProjectListLayout({ projects = [], view = "grid" }) {
 
           {/* Actions */}
           <div className={`flex items-center justify-between px-4 pb-4 ${view === "list" ? "pl-0 pb-0" : ""}`}>
-            <Button size="sm" variant="outline" className="text-black" onClick={() => console.log("View", project.id)}>
-              View
-            </Button>
+            {/* //link to project details */}
+           <Link to={`/editor/${project.id}`}>
+              <Button size="sm" variant="outline" className="text-black">
+                View
+              </Button>
+            </Link>
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="icon" variant="ghost">

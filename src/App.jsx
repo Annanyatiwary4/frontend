@@ -25,9 +25,11 @@ import Login from "./pages/Login";
 import  { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore";
 import Loader from "./components/Pageerror/Loader";
+
 import ForgotPasswordPage from "./shared/ForgotPassword";
 import ResetPasswordPage from "./shared/ResetPassword";
 import { Templates } from "./pages/Templates";
+import Editor from "./client/Editor";
 
 
 // protect authenticated routes
@@ -109,10 +111,8 @@ const MainLayout = () => {
          
           } />
 
-          <Route path="/reset-password/:token" element={
-          <ResetPasswordPage />
-          } />
-
+          <Route path="/reset-password/:token" element={ <ResetPasswordPage /> } />
+         <Route path="/editor/:id" element={ <Editor /> } />
       </Routes>
       <Toaster />
     </>

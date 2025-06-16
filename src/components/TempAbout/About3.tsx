@@ -1,11 +1,15 @@
 "use client";
+
 import React from "react";
-
-
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 
-const About3 = () => {
+interface AboutProps {
+  heading: string;
+  paragraphs: string[];
+  buttonText?: string;
+}
+
+const About3: React.FC<AboutProps> = ({ heading, paragraphs, buttonText }) => {
   return (
     <motion.section
       id="about"
@@ -15,14 +19,17 @@ const About3 = () => {
       transition={{ duration: 1, delay: 0.5 }}
     >
       <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-6">About Me</h2>
-        <p className="text-muted-foreground mb-6">
-          Hey! It's <strong>John Doe</strong> and I'm a{" "}
-          <strong>Frontend Web Developer</strong> located in Los Angeles.
-        </p>
-        <button className="bg-black hover:bg-gray-400 text-white px-6 py-2 rounded-lg">
-              Contact
-            </button>
+        <h2 className="text-3xl font-bold mb-6">{heading}</h2>
+        {paragraphs.map((para, idx) => (
+          <p key={idx} className="text-muted-foreground mb-6">
+            {para}
+          </p>
+        ))}
+        {buttonText && (
+          <button className="bg-black hover:bg-gray-400 text-white px-6 py-2 rounded-lg">
+            {buttonText}
+          </button>
+        )}
       </div>
     </motion.section>
   );

@@ -28,6 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { templateList } from "@/lib/TemplateList";
 
 export default function DashboardTopbar({
   onViewChange,
@@ -82,7 +83,7 @@ export default function DashboardTopbar({
                   const project = {
                     id: Date.now(),
                     name: e.target.name.value,
-                    theme: theme || "minimal",
+                    templateId: theme || templateList[0].id,
                     createdAt: new Date().toISOString(),
                   };
                   onCreateProject?.(project);
@@ -104,15 +105,17 @@ export default function DashboardTopbar({
                   <Label htmlFor="theme" className="text-zinc-200">Select Theme</Label>
                   <Select value={theme} onValueChange={setTheme}>
                     <SelectTrigger
-                      id="theme"
+                     
                       className="bg-zinc-800 text-white border-zinc-700"
                     >
                       <SelectValue placeholder="Choose a theme" />
                     </SelectTrigger>
                     <SelectContent className="bg-zinc-900 text-white border-zinc-700">
-                      <SelectItem value="minimal">Minimal</SelectItem>
-                      <SelectItem value="modern">Modern</SelectItem>
-                      <SelectItem value="creative">Creative</SelectItem>
+                      {templateList.map((template) => (
+                        <SelectItem key={template.id} value={template.id}>
+                          {template.title}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                 </div>
