@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
+import { useAuthStore } from "@/store/authStore";
 
 // Static menu items
 const items = [
@@ -45,7 +46,7 @@ const items = [
 
 export function AppSidebar({ projects = [] }) {
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
-
+   const {user} = useAuthStore();
   return (
     <Sidebar className="bg-black text-white">
       <SidebarHeader className="bg-black" />
@@ -150,7 +151,7 @@ export function AppSidebar({ projects = [] }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton >
-                  <User2 /> Username
+                  <User2 /> {user.name}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
