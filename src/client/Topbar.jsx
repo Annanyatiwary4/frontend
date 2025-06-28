@@ -29,7 +29,9 @@ import {
 } from "@/components/ui/select";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { templateList } from "@/lib/TemplateList";
-
+import { useProjectStore
+  
+ } from "@/store/ProjectStore";
 export default function DashboardTopbar({
   onViewChange,
   onFilterChange,
@@ -38,6 +40,9 @@ export default function DashboardTopbar({
   const [view, setView] = useState("grid");
   const [filter, setFilter] = useState("latest");
   const [theme, setTheme] = useState("");
+  const [projectName, setProjectName] = useState("");
+  const [resumeFile, setResumeFile] = useState(null);
+  const createProject = useProjectStore((state) => state.createProject);
 
   const handleViewChange = (value) => {
     if (value) {
@@ -49,6 +54,33 @@ export default function DashboardTopbar({
   const handleFilterChange = (value) => {
     setFilter(value);
     onFilterChange?.(value);
+  };
+
+
+  const handleCreateProject = async (e) => {
+    e.preventDefault();
+
+    if (!projectName || !theme || !resumeFile) {
+      alert("Please provide project name, theme and resume file.");
+      return;
+    }
+
+    try {
+         await onCreateProject?.({
+         title : projectName,
+         templateId : theme,
+         resumeFile,
+    });
+      console.log("project created")
+
+       setProjectName("");
+       setTheme("");
+       setResumeFile(null);
+ 
+    } catch (error) {
+      console.error("❌ Failed to create project", error);
+      alert("Something went wrong while creating the project.");
+    }
   };
 
   return (
@@ -76,26 +108,14 @@ export default function DashboardTopbar({
                 </DialogDescription>
               </DialogHeader>
 
-              <form
-                className="grid gap-6"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  const project = {
-                    id: Date.now(),
-                    name: e.target.name.value,
-                    templateId: theme || templateList[0].id,
-                    createdAt: new Date().toISOString(),
-                  };
-                  onCreateProject?.(project);
-                  e.target.reset();
-                  setTheme("");
-                }}
-              >
+               <form className="grid gap-6" onSubmit={handleCreateProject}>
                 <div className="grid gap-2">
                   <Label htmlFor="project-name" className="text-zinc-200">Project Name</Label>
                   <Input
                     id="project-name"
                     name="name"
+                    value={projectName}
+                    onChange={(e) => setProjectName(e.target.value)}
                     placeholder="My Portfolio"
                     className="bg-zinc-800 text-white border-zinc-700 placeholder-zinc-500"
                   />
@@ -126,6 +146,7 @@ export default function DashboardTopbar({
                     id="resume"
                     type="file"
                     accept=".pdf,.doc,.docx"
+                    onChange={(e) => setResumeFile(e.target.files[0])}
                     className="bg-zinc-800 text-white border-zinc-700 file:text-white"
                   />
                 </div>

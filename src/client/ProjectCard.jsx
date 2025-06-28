@@ -32,12 +32,17 @@ export default function ProjectListLayout({ projects = [], view = "grid" }) {
   return (
     <div className={view === "grid" ? gridStyle : listStyle}>
       {projects.map((project) => (
+        
         <div
           key={project.id}
           className={`border rounded-lg shadow-sm  dark:bg-zinc-900 hover:shadow-md transition ${
             view === "list" ? "flex items-center gap-6 p-4" : ""
           }`}
+          
         >
+          
+
+
           {/* Preview */}
           <div
               className={`overflow-hidden ${
@@ -46,10 +51,10 @@ export default function ProjectListLayout({ projects = [], view = "grid" }) {
                   : "w-32 h-20 rounded-md"
               }`}
             >
-              {templatesMap[project.templateId]?.src ? (
+              {project.thumbnail ? (
                 <img
-                  src={templatesMap[project.templateId].src}
-                  alt={templatesMap[project.templateId].title}
+                  src={project.thumbnail}
+                  alt="Project Thumbnail"
                   className="w-full h-full object-cover"
                 />
               ) : (
@@ -57,13 +62,11 @@ export default function ProjectListLayout({ projects = [], view = "grid" }) {
                   No Preview
                 </div>
               )}
-              
-
             </div>
 
           {/* Content */}
           <div className={`p-4 space-y-1 ${view === "list" ? "flex-1" : ""}`}>
-            <h3 className="font-semibold text-base">{project.name}</h3>
+            <h3 className="font-semibold text-base">{project.title}</h3>
            
             <p className="text-xs text-muted-foreground">
               Created: {project.createdAt}

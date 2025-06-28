@@ -151,7 +151,7 @@ export function AppSidebar({ projects = [] }) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton >
-                  <User2 /> {user.name}
+                  <User2 /> {user}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

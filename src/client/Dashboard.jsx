@@ -1,31 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AppSidebar } from './app-sidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import DashboardTopbar from './Topbar';
 import ProjectCard from './ProjectCard';
+import { useProjectStore } from '@/store/ProjectStore';
 
 const Dashboard = () => {
- const [projects, setProjects] = useState(() => {
-    // Load projects from localStorage
-    const saved = localStorage.getItem("projects");
-    return saved ? JSON.parse(saved) : [];
-  });
+ 
   const[view, setView] = useState('grid');
+  const {projects , getUserProjects,createProject} = useProjectStore();
 
-  const handleCreateProject = (projectData) => {
-  const newProject = {
-    id: crypto.randomUUID(),
-    name: projectData.name,
-    templateId: projectData.templateId, // 👈 comes from Theme Selection
-    createdAt: new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }),
+  useEffect (()=>{
+    getUserProjects();
+  },[])
 
-
+  const handleCreateProject = async ({ title, templateId, resumeFile }) => {
+    const projectId = await createProject(title, templateId, resumeFile); // 👈 create project in backend
+    await getUserProjects(); // 🔁 refresh projects after creation
   };
 
-  const updatedProjects = [...projects, newProject];
-    setProjects(updatedProjects);
-    localStorage.setItem("projects", JSON.stringify(updatedProjects));
-};
+
 
 
   return (
