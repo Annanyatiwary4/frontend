@@ -3,13 +3,21 @@ import React from "react";
 interface AboutProps {
   heading: string;
   paragraphs: string[];
+  resumeData?:any;
 }
 
-const About1: React.FC<AboutProps> = ({ heading, paragraphs }) => {
+const About1: React.FC<AboutProps> = ({ heading, paragraphs,resumeData }) => {
+ 
+  const finalHeading = resumeData?.basics?.name ? `About ${resumeData.basics.name}` : heading;
+  const finalParagraphs =
+    resumeData?.summary
+      ? [resumeData.summary]
+      : paragraphs;
+
   return (
     <section className="bg-white py-16">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-8">{heading}</h2>
+        <h2 className="text-4xl font-bold mb-8">{finalHeading}</h2>
         {paragraphs.slice(0, 1).map((text, i) => (
           <p key={i} className="text-xl text-gray-700 mb-6">
             {text}

@@ -12,11 +12,9 @@ const templatesMap = Object.fromEntries(
 const Editor = () => {
   const { projectId } = useParams();
   const { currentProject, fetchProjectById } = useProjectStore();
-  console.log("📄 Loaded resumeData:", currentProject?.resumeData);
-
-
+ 
   useEffect(() => {
-    fetchProjectById(projectId);
+    if (projectId) fetchProjectById(projectId);
   }, [projectId, fetchProjectById]);
 
   if (!currentProject) {
@@ -24,17 +22,18 @@ const Editor = () => {
   }
 
   const template = templatesMap[currentProject.templateId];
+  const TemplateComponent = template.component;
 
   return (
     <div className="min-h-screen bg-white text-black p-4">
       <h1 className="text-2xl font-bold mb-4">Editor - {currentProject.title}</h1>
 
-      {template ? (
+      {TemplateComponent ? (
         <div className="border rounded-xl p-4 shadow">
-          {/* Render the template with injected resumeData */}
-          {React.cloneElement(template.content, {
-            config: currentProject.resumeData,
-          })}
+          <TemplateComponent
+            config={template.config} // default config (structure)
+            resumeData={currentProject.resumeData} // dynamic user data
+          />
         </div>
       ) : (
         <div className="text-red-500">❌ Template not found for this project</div>
@@ -42,5 +41,6 @@ const Editor = () => {
     </div>
   );
 };
+
 
 export default Editor;

@@ -4,9 +4,13 @@ interface ContactProps {
   heading: string;
   subtext?: string;
   buttonText?: string;
+  email?: string; // ✅ Add this for fallback
+  resumeData?: any;
 }
 
-const Contact1: React.FC<ContactProps> = ({ heading, subtext, buttonText }) => {
+const Contact1: React.FC<ContactProps> = ({ heading, subtext, buttonText, email, resumeData }) => {
+  const finalEmail = email || "";
+
   return (
     <section className="bg-gray-900 text-white py-16">
       <div className="max-w-6xl mx-auto text-center">
@@ -15,15 +19,32 @@ const Contact1: React.FC<ContactProps> = ({ heading, subtext, buttonText }) => {
         <form className="space-y-6 max-w-2xl mx-auto">
           <div>
             <label htmlFor="name" className="block text-left text-lg">Name</label>
-            <input type="text" id="name" className="w-full p-3 mt-2 border border-gray-300 rounded-lg" placeholder="Your name" />
+            <input
+              type="text"
+              id="name"
+              className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
+              placeholder="Your name"
+            />
           </div>
           <div>
             <label htmlFor="email" className="block text-left text-lg">Email</label>
-            <input type="email" id="email" className="w-full p-3 mt-2 border border-gray-300 rounded-lg" placeholder="Your email" />
+            <input
+              type="email"
+              id="email"
+              className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
+              placeholder="Your email"
+              value={finalEmail}
+              readOnly // ✅ optional: make it non-editable if it's just for display
+            />
           </div>
           <div>
             <label htmlFor="message" className="block text-left text-lg">Message</label>
-            <textarea id="message" rows={4} className="w-full p-3 mt-2 border border-gray-300 rounded-lg" placeholder="Your message" />
+            <textarea
+              id="message"
+              rows={4}
+              className="w-full p-3 mt-2 border border-gray-300 rounded-lg"
+              placeholder="Your message"
+            />
           </div>
           <button type="submit" className="w-full bg-indigo-600 text-white py-3 rounded-lg">
             {buttonText || "Send Message"}

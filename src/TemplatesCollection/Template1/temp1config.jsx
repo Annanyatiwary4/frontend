@@ -14,7 +14,6 @@ const template1Config = {
       { label: "Projects", href: "#projects" },
       { label: "Contact", href: "#contact" },
     ],
-    logoText: "John Doe",
   },
 
  hero: {

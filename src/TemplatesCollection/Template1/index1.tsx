@@ -9,16 +9,16 @@ import About1 from '@/components/TempAbout/About1'
 import Footer1 from '@/components/TempFooter/Footer1'
 
 
-export default function TemplateSimple({ config }: { config: any }) {
+export default function TemplateSimple({ config, resumeData }: { config: any , resumeData:any }) {
   return (
     <>
-      <Navbar1 {...config.navbar} />
-      <Hero1 {...config.hero} />
-      <About1 {...config.about} />
-      <Experience1 experiences={config.experience} />
-      <Project1 projects={config.project} />
-      <Contact1 {...config.contact} />
-      <Footer1 {...config.footer} />
+      <Navbar1 {...config.navbar}  resumeData={resumeData}/>
+      <Hero1 {...config.hero} resumeData={resumeData} />
+      <About1 {...config.about} resumeData={resumeData} />
+      <Experience1 experiences={config.experience} resumeData={resumeData} />
+      <Project1 projects={config.project} resumeData={resumeData}/>
+      <Contact1 {...config.contact} resumeData={resumeData}/>
+      <Footer1 {...config.footer}resumeData={resumeData} />
     </>
   )
 }

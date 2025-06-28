@@ -1,4 +1,3 @@
-// components/Project1.tsx
 import React from "react";
 
 interface Project {
@@ -8,13 +7,21 @@ interface Project {
   link: string;
 }
 
-const Project1 = ({ projects }: { projects: Project[] }) => {
+type Props = {
+  projects: Project[];
+  resumeData?: any;
+};
+
+const Project1 = ({ projects, resumeData }: Props) => {
+  // ✅ Use resumeData.projects if available, else fallback to props.projects
+  const finalProjects: Project[] = resumeData?.projects || projects;
+
   return (
     <section className="bg-white py-16">
       <div className="max-w-6xl mx-auto text-center">
         <h2 className="text-4xl font-bold mb-8">Our Portfolio</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {finalProjects.map((project, index) => (
             <div key={index} className="bg-gray-100 p-6 rounded-lg shadow-lg">
               <img
                 src={project.imageUrl}

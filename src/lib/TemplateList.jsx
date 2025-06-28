@@ -9,36 +9,23 @@ import template3Config from "@/TemplatesCollection/Template3/temp3config";
 export const templateList = [
   {
     id: template1Config.id,
-    category: "Creative",
     title: template1Config.name,
     src: template1Config.thumbnail,
-    content: (
-      <div className="rounded-xl shadow-xl overflow-hidden border border-gray-300">
-        <TemplateSimple config={template1Config} /> {/* ✅ FIXED HERE */}
-      </div>
-    ),
+    config: template1Config,
+    component: TemplateSimple, // ✅ pass reference, not JSX
   },
   {
     id: template2Config.id,
-    category: "Elegant",
     title: template2Config.name,
     src: template2Config.thumbnail,
-    content: (
-      <div className="rounded-xl shadow-xl overflow-hidden border border-gray-300">
-        <Templateminimal config={template2Config} /> {/* ✅ FIXED */}
-      </div>
-    ),
+    config: template2Config,
+    component: Templateminimal,
   },
   {
     id: template3Config.id,
-    category: "Modern",
     title: template3Config.name,
     src: template3Config.thumbnail,
-    content: (
-      <div className="rounded-xl shadow-xl overflow-hidden border border-gray-300">
-        <Templatemodern config={template3Config} /> {/* ✅ FIXED */}
-      </div>
-    ),
+    config: template3Config,
+    component: Templatemodern,
   },
 ];
-

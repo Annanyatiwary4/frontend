@@ -5,16 +5,19 @@ import React from "react";
 
 interface NavbarProps {
   links: { label: string; href: string }[];
+  logoText: string;
+  resumeData?: any;
 }
 
-const Navbar1 = ({ links }: NavbarProps) => {
+export default function Navbar1({ links, logoText, resumeData }: NavbarProps) {
+  const finalLogo = resumeData?.basics?.name || logoText;
   return (
     <header className="bg-black text-beige px-6 py-4">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <div className="text-lg font-semibold text-white">MyLogo</div>
+        <div className="text-lg font-semibold text-white">{finalLogo}</div>
         <nav className="text-white hidden md:flex space-x-8 text-sm font-medium">
-          {links.map((link, idx) => (
-            <a key={idx} href={link.href} className="hover:underline">
+          {links.map((link, i) => (
+            <a key={i} href={link.href} className="hover:underline">
               {link.label}
             </a>
           ))}
@@ -27,4 +30,4 @@ const Navbar1 = ({ links }: NavbarProps) => {
   );
 };
 
-export default Navbar1;
+
