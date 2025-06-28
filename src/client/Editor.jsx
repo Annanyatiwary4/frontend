@@ -1,24 +1,44 @@
-// pages/ProjectPreview.jsx
-import { templateList } from "@/lib/TemplateList";
+// src/pages/Editor.jsx
+import React from "react"
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useProjectStore } from "@/store/ProjectStore";
+import { templateList } from "@/lib/TemplateList";
 
+const templatesMap = Object.fromEntries(
+  templateList.map((template) => [template.id, template])
+);
 
 const Editor = () => {
-  const { id } = useParams();
+  const { projectId } = useParams();
+  const { currentProject, fetchProjectById } = useProjectStore();
+  console.log("📄 Loaded resumeData:", currentProject?.resumeData);
 
-  const projects = JSON.parse(localStorage.getItem("projects")) || [];
-  const project = projects.find((p) => p.id === id);
 
-  if (!project) return <div className="text-white p-8">Project not found</div>;
+  useEffect(() => {
+    fetchProjectById(projectId);
+  }, [projectId, fetchProjectById]);
 
-  const template = templateList.find((t) => t.id === project.templateId);
+  if (!currentProject) {
+    return <div className="text-center text-white py-20">Loading project...</div>;
+  }
 
-  if (!template) return <div className="text-white p-8">Template not found</div>;
+  const template = templatesMap[currentProject.templateId];
 
   return (
-    <div className="min-h-screen bg-white text-black p-6">
-      {/* You can pass full resume data later */}
-      {template.content}
+    <div className="min-h-screen bg-white text-black p-4">
+      <h1 className="text-2xl font-bold mb-4">Editor - {currentProject.title}</h1>
+
+      {template ? (
+        <div className="border rounded-xl p-4 shadow">
+          {/* Render the template with injected resumeData */}
+          {React.cloneElement(template.content, {
+            config: currentProject.resumeData,
+          })}
+        </div>
+      ) : (
+        <div className="text-red-500">❌ Template not found for this project</div>
+      )}
     </div>
   );
 };

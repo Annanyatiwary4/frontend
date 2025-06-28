@@ -112,7 +112,7 @@ const MainLayout = () => {
           } />
 
           <Route path="/reset-password/:token" element={ <ResetPasswordPage /> } />
-         <Route path="/editor/:id" element={ <Editor /> } />
+         <Route path="/editor/:projectId" element={ <Editor /> } />
       </Routes>
       <Toaster />
     </>

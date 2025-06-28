@@ -76,7 +76,7 @@ export default function ProjectListLayout({ projects = [], view = "grid" }) {
           {/* Actions */}
           <div className={`flex items-center justify-between px-4 pb-4 ${view === "list" ? "pl-0 pb-0" : ""}`}>
             {/* //link to project details */}
-           <Link to={`/editor/${project.id}`}>
+           <Link to={`/editor/${project._id}`}>
               <Button size="sm" variant="outline" className="text-black">
                 View
               </Button>
