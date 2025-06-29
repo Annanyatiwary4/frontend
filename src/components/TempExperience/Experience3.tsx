@@ -1,4 +1,5 @@
-// components/Experience3.tsx
+"use client";
+
 import React from "react";
 import { motion } from "framer-motion";
 
@@ -10,7 +11,25 @@ interface ExperienceType {
   icon?: string;
 }
 
-const Experience3 = ({ experiences }: { experiences: ExperienceType[] }) => {
+interface Experience3Props {
+  experiences?: ExperienceType[];
+  resumeData?: {
+    experience?: {
+      title?: string;
+      company?: string;
+      duration?: string;
+      description?: string;
+      icon?: string;
+    }[];
+  };
+}
+
+const Experience3: React.FC<Experience3Props> = ({ experiences, resumeData }) => {
+  const finalExperiences =
+    resumeData?.experience || experiences || [];
+
+  if (!finalExperiences.length) return null;
+
   return (
     <motion.section
       id="experience"
@@ -22,7 +41,7 @@ const Experience3 = ({ experiences }: { experiences: ExperienceType[] }) => {
       <div className="max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold mb-10 text-center">Experience</h2>
 
-        {experiences.map((exp, index) => (
+        {finalExperiences.map((exp, index) => (
           <motion.div
             key={index}
             className="flex flex-col md:flex-row items-start gap-8 bg-background p-6 rounded-xl shadow-md mb-8"

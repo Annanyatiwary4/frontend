@@ -2,13 +2,21 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Mail, User, GitBranch } from "lucide-react";
 
+interface SocialLink {
+  label: string;
+  href: string;
+  icon: "github" | "linkedin" | "mail";
+}
+
 interface FooterProps {
-  copyright: string;
-  socialLinks: {
-    label: string;
-    href: string;
-    icon: "github" | "linkedin" | "mail";
-  }[];
+  copyright?: string;
+  socialLinks?: SocialLink[];
+  resumeData?: {
+    name?: string;
+    github?: string;
+    linkedin?: string;
+    email?: string;
+  };
 }
 
 const iconMap = {
@@ -17,7 +25,33 @@ const iconMap = {
   mail: Mail,
 };
 
-const Footer3 = ({ copyright, socialLinks }: FooterProps) => {
+const Footer3: React.FC<FooterProps> = ({ copyright, socialLinks = [], resumeData }) => {
+  const hasResume = !!resumeData;
+
+  const finalCopyright = hasResume
+    ? `© ${new Date().getFullYear()} ${resumeData?.name || "Your Name"}`
+    : copyright || `© ${new Date().getFullYear()} Your Name`;
+
+  const finalLinks: SocialLink[] = hasResume
+    ? [
+        resumeData?.github && {
+          label: "GitHub",
+          href: `https://github.com/${resumeData.github}`,
+          icon: "github",
+        },
+        resumeData?.linkedin && {
+          label: "LinkedIn",
+          href: `https://linkedin.com/in/${resumeData.linkedin}`,
+          icon: "linkedin",
+        },
+        resumeData?.email && {
+          label: "Email",
+          href: `mailto:${resumeData.email}`,
+          icon: "mail",
+        },
+      ].filter(Boolean) as SocialLink[]
+    : socialLinks;
+
   return (
     <motion.footer
       className="py-8 bg-gray-500 text-white"
@@ -27,25 +61,25 @@ const Footer3 = ({ copyright, socialLinks }: FooterProps) => {
     >
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-center space-x-6 mb-4">
-          {socialLinks.map((link, idx) => {
+          {finalLinks.map((link, idx) => {
             const Icon = iconMap[link.icon];
-            if (!Icon) {
-                  console.error(`Invalid icon type '${link.icon}' used in Footer3`);
-                  return null; // Skip rendering if icon doesn't exist
-                }
             return (
-              <a
-                key={idx}
-                href={link.href}
-                className="text-2xl hover:text-gray-200 transition-all duration-300"
-                aria-label={link.label}
-              >
-                <Icon />
-              </a>
+              Icon && (
+                <a
+                  key={idx}
+                  href={link.href}
+                  className="text-2xl hover:text-gray-200 transition-all duration-300"
+                  aria-label={link.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon />
+                </a>
+              )
             );
           })}
         </div>
-        <p className="text-sm text-gray-200">{copyright}</p>
+        <p className="text-sm text-gray-200">{finalCopyright}</p>
       </div>
     </motion.footer>
   );
