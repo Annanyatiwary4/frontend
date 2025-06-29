@@ -29,7 +29,10 @@ import Loader from "./components/Pageerror/Loader";
 import ForgotPasswordPage from "./shared/ForgotPassword";
 import ResetPasswordPage from "./shared/ResetPassword";
 import { Templates } from "./pages/Templates";
+import Preview from "./components/EditorLayout/Preview";
+import EditorLayout from "./client/Editor";
 import Editor from "./client/Editor";
+
 
 
 // protect authenticated routes
@@ -112,7 +115,8 @@ const MainLayout = () => {
           } />
 
           <Route path="/reset-password/:token" element={ <ResetPasswordPage /> } />
-         <Route path="/editor/:projectId" element={ <Editor /> } />
+        
+         <Route path="/editor/:projectId" element={<Editor />} />
       </Routes>
       <Toaster />
     </>

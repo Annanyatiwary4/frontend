@@ -1,46 +1,31 @@
-// src/pages/Editor.jsx
-import React from "react"
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useProjectStore } from "@/store/ProjectStore";
-import { templateList } from "@/lib/TemplateList";
+"use client";
 
-const templatesMap = Object.fromEntries(
-  templateList.map((template) => [template.id, template])
-);
+import ComponentsPanel from "@/components/EditorLayout/componentsPanel";
+import Preview from "@/components/EditorLayout/Preview";
+import React from "react";
 
-const Editor = () => {
-  const { projectId } = useParams();
-  const { currentProject, fetchProjectById } = useProjectStore();
- 
-  useEffect(() => {
-    if (projectId) fetchProjectById(projectId);
-  }, [projectId, fetchProjectById]);
 
-  if (!currentProject) {
-    return <div className="text-center text-white py-20">Loading project...</div>;
-  }
+// import PropertiesPanel from "./PropertiesPanel"; (optional for later)
 
-  const template = templatesMap[currentProject.templateId];
-  const TemplateComponent = template.component;
-
+const EditorLayout = () => {
   return (
-    <div className="min-h-screen bg-white text-black p-4">
-      <h1 className="text-2xl font-bold mb-4">Editor - {currentProject.title}</h1>
+    <div className="flex h-screen w-full overflow-hidden">
+      {/* Left: Component Panel */}
+      <aside className="w-1/5 bg-gray-50 border-r p-4 overflow-y-auto">
+        <ComponentsPanel />
+      </aside>
 
-      {TemplateComponent ? (
-        <div className="border rounded-xl p-4 shadow">
-          <TemplateComponent
-            config={template.config} // default config (structure)
-            resumeData={currentProject.resumeData} // dynamic user data
-          />
-        </div>
-      ) : (
-        <div className="text-red-500">❌ Template not found for this project</div>
-      )}
+      {/* Center: Live Preview */}
+      <main className="w-3/5 bg-white p-4 overflow-y-auto">
+        <Preview />
+      </main>
+
+      {/* Right: Placeholder for Properties Panel */}
+      <aside className="w-1/5 bg-gray-50 border-l p-4 overflow-y-auto">
+        <div className="text-gray-500">⚙️ Properties panel coming soon</div>
+      </aside>
     </div>
   );
 };
 
-
-export default Editor;
+export default EditorLayout;
